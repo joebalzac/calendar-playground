@@ -32,10 +32,12 @@ const Calendar: React.FC<CalendarProps> = ({ reminders, onDayClick }) => {
   }, [currentDate]);
 
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-3xl font-semibold">{currentMonthName}</h1>
-        <div className="flex gap-4">
+    <div className="w-9/12 mx-auto">
+      <div className="flex items-end justify-between w-full mb-4">
+        <h1 className="text-3xl font-semibold text-gray-900">
+          {currentMonthName}
+        </h1>
+        <div className="flex items-end justify-center gap-32">
           <button
             onClick={() =>
               setCurrentDate(
@@ -56,16 +58,21 @@ const Calendar: React.FC<CalendarProps> = ({ reminders, onDayClick }) => {
           </button>
         </div>
       </div>
-      <ul className="grid grid-cols-7 gap-2">
+      <ul className="w-full grid grid-cols-2 md:grid-cols-5 lg:grid-cols-7 gap-1">
         {calendarDays.map((day) => (
-          <li
-            key={day.toISOString()}
-            className="border p-2 rounded-lg text-center cursor-pointer hover:bg-gray-100"
-            onDoubleClick={(e) => onDayClick(e, day)}
-          >
-            {day.getDate()}
-            <ReminderList reminders={reminders} day={day} />
-          </li>
+          <div key={day.toISOString()}>
+            <li
+              className={`w-full h-32 border border-gray-300 rounded-lg p-2 flex flex-col items-center justify-between text-lg transition duration-200 shadow-sm cursor-pointer hover:bg-gray-100 ${
+                day.toDateString() === new Date().toDateString()
+                  ? "bg-purple-500 text-white font-bold"
+                  : "bg-white"
+              }`}
+              onDoubleClick={(e) => onDayClick(e, day)}
+            >
+              {day.getDate()}
+              <ReminderList reminders={reminders} day={day} />
+            </li>
+          </div>
         ))}
       </ul>
     </div>
