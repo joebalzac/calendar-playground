@@ -18,8 +18,14 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen w-9/12 mx-auto">
-      <Calendar reminders={reminders} onDayClick={handleDayClick} />
+    <div className="flex justify-center items-center h-screen w-9/12 mx-auto">
+      <Calendar
+        reminders={reminders}
+        onDayClick={handleDayClick}
+        onReminderClick={(e) => {
+          e.preventDefault();
+        }}
+      />
 
       <ReminderModal
         isOpen={isModalOpen}

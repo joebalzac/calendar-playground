@@ -8,17 +8,40 @@ export interface Reminder {
 interface ReminderListProps {
   reminders: Reminder[];
   day: Date;
+  onReminderClick: (
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLButtonElement>,
+    reminder: Reminder
+  ) => void;
 }
 
-const ReminderList: React.FC<ReminderListProps> = ({ reminders, day }) => {
+const ReminderList: React.FC<ReminderListProps> = ({
+  reminders,
+  day,
+  onReminderClick,
+}) => {
   return (
-    <div>
+    <div className="w-full flex flex-col items-start">
       {reminders
-        .filter((reminder) => new Date(reminder.date).toDateString() === day.toDateString())
+        .filter(
+          (reminder) =>
+            new Date(reminder.date).toDateString() === day.toDateString()
+        )
         .map((reminder) => (
           <button
             key={reminder.id}
-            className="block bg-purple-400 text-white text-xs px-2 py-1 rounded-lg mt-1 truncate"
+            onClick={(e) => onReminderClick(e, reminder)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") onReminderClick(e, reminder);
+            }}
+            className={`w-full text-white text-xs px-2 py-1 rounded-lg truncate 
+              ${
+                reminder.id
+                  ? "bg-purple-400 hover:bg-purple-700"
+                  : "bg-gray-400"
+              } 
+              text-left my-1 cursor-pointer flex justify-between`}
           >
             {reminder.title}
           </button>
