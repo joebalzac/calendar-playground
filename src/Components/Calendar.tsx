@@ -5,9 +5,19 @@ import ReminderList, { Reminder } from "./ReminderList";
 interface CalendarProps {
   reminders: Reminder[];
   onDayClick: (e: React.MouseEvent, day: Date) => void;
+  onReminderClick: (
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLButtonElement>,
+    reminder: Reminder
+  ) => void;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ reminders, onDayClick }) => {
+const Calendar: React.FC<CalendarProps> = ({
+  reminders,
+  onDayClick,
+  onReminderClick,
+}) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState<Date[]>([]);
   const [currentMonthName, setCurrentMonthName] = useState("");
@@ -31,14 +41,24 @@ const Calendar: React.FC<CalendarProps> = ({ reminders, onDayClick }) => {
     );
   }, [currentDate]);
 
+  const handleBackToday = () => {
+    setCurrentDate(new Date());
+  };
+
   return (
-    <div className="w-9/12 mx-auto">
+    <div className="flex flex-col justify-center items-center h-screen w-9/12 mx-auto">
       <div className="flex items-end justify-between w-full mb-4">
         <h1 className="text-3xl font-semibold text-gray-900">
           {currentMonthName}
         </h1>
-        <div className="flex items-end justify-center gap-32">
+        <div className="flex items-end justify-center gap-6">
+          <button onClick={handleBackToday}>
+            <h2 className="text-1xl font-medium text-purple-400">
+              Back to Today
+            </h2>
+          </button>
           <button
+            className="shadow-md rounded-md bg-purple-100 p-2"
             onClick={() =>
               setCurrentDate(
                 new Date(currentDate.setMonth(currentDate.getMonth() - 1))
@@ -48,6 +68,7 @@ const Calendar: React.FC<CalendarProps> = ({ reminders, onDayClick }) => {
             <FcPrevious />
           </button>
           <button
+            className="shadow-md rounded-md bg-purple-100 p-2"
             onClick={() =>
               setCurrentDate(
                 new Date(currentDate.setMonth(currentDate.getMonth() + 1))
@@ -62,15 +83,19 @@ const Calendar: React.FC<CalendarProps> = ({ reminders, onDayClick }) => {
         {calendarDays.map((day) => (
           <div key={day.toISOString()}>
             <li
-              className={`w-full h-32 border border-gray-300 rounded-lg p-2 flex flex-col items-center justify-between text-lg transition duration-200 shadow-sm cursor-pointer hover:bg-gray-100 ${
+              className={`w-full h-32 border border-gray-300 rounded-lg p-8 flex flex-col items-center justify-between text-lg transition duration-200 shadow-sm cursor-pointer hover:bg-gray-100 ${
                 day.toDateString() === new Date().toDateString()
-                  ? "bg-purple-500 text-white font-bold"
+                  ? "bg-purple-300 text-white font-bold"
                   : "bg-white"
               }`}
               onDoubleClick={(e) => onDayClick(e, day)}
             >
               {day.getDate()}
-              <ReminderList reminders={reminders} day={day} />
+              <ReminderList
+                reminders={reminders}
+                day={day}
+                onReminderClick={onReminderClick}
+              />
             </li>
           </div>
         ))}
