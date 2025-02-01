@@ -7,7 +7,7 @@ interface Reminder {
   date: number;
 }
 
-export function useReminders() {
+export const useReminders = () => {
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [newReminder, setNewReminder] = useState("");
 
@@ -43,4 +43,4 @@ export function useReminders() {
     deleteReminder,
     updateReminder,
   };
-}
+};
