@@ -24,7 +24,7 @@ export const useReminders = () => {
     setReminders([...reminders, newReminderItem]);
     setNewReminder("");
   };
-
+// adds comment
   const deleteReminder = (id: number) => {
     setReminders(reminders.filter((reminder) => reminder.id !== id));
   };
