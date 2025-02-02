@@ -4,6 +4,7 @@ import Modal from "./Modal";
 interface EditReminderProps {
   isOpen: boolean;
   onClose: () => void;
+  editReminder: string;
   onEditReminder: (id: number, title: string) => void;
   setEditReminder: (title: string) => void;
   onSaveReminder: (title: string) => void;
@@ -13,6 +14,7 @@ interface EditReminderProps {
 const EditReminderModal = ({
   isOpen,
   onClose,
+  editReminder,
   onEditReminder,
   setEditReminder,
   onSaveReminder,
@@ -21,7 +23,11 @@ const EditReminderModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} position={position}>
       <h2 className="text-lg font-semibold">Edit Reminder</h2>
-      <input type="text" onChange={(e) => setEditReminder(e.target.value)} />
+      <input
+        value={editReminder}
+        type="text"
+        onChange={(e) => setEditReminder(e.target.value)}
+      />
       <button onClick={() => onSaveReminder}>Save</button>
       <button onClick={() => onEditReminder}>Edit</button>
     </Modal>

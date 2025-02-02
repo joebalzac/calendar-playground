@@ -44,7 +44,7 @@ const ReminderList: React.FC<ReminderListProps> = ({
                   ? "bg-purple-400 hover:bg-purple-700"
                   : "bg-gray-400"
               } 
-              text-left my-1 cursor-pointer flex justify-between`}
+              text-left my-1 cursor-default flex justify-between`}
           >
             {reminder.title}
           </button>

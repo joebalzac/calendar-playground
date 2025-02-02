@@ -90,7 +90,7 @@ const Calendar: React.FC<CalendarProps> = ({
                   ? "bg-purple-300 text-white font-bold"
                   : "bg-white"
               }`}
-              onClick={(e) => onDayClick(e, day)}
+              onDoubleClick={(e) => onDayClick(e, day)}
             >
               {day.getDate()}
               <ReminderList

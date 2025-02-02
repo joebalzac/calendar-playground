@@ -49,10 +49,12 @@ export const useReminders = () => {
   return {
     reminders,
     newReminder,
+    editReminder,
     setNewReminder,
     addReminder,
     deleteReminder,
     saveReminder,
     handleEditReminder,
+    setEditReminder,
   };
 };
