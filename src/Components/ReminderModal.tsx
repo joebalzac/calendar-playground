@@ -1,25 +1,22 @@
-import { useState } from "react";
 import Modal from "./Modal";
 
 interface ReminderModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAddReminder: () => void;
-  onDeleteReminder: (id: number) => void;
   newReminder: string;
   setNewReminder: (text: string) => void;
   position: { top: number; left: number };
 }
 
-const ReminderModal: React.FC<ReminderModalProps> = ({
+const ReminderModal = ({
   isOpen,
   onClose,
   onAddReminder,
   newReminder,
   setNewReminder,
-  onDeleteReminder,
   position,
-}) => {
+}: ReminderModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} position={position}>
       <h2 className="text-lg font-semibold">Add Reminder</h2>
@@ -32,10 +29,6 @@ const ReminderModal: React.FC<ReminderModalProps> = ({
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             onAddReminder();
-          }
-
-          if (e.key === "Backspace") {
-            onDeleteReminder(0); 
           }
         }}
       />

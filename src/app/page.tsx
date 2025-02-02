@@ -37,6 +37,7 @@ export default function Home() {
         onReminderClick={(e) => {
           e.preventDefault();
         }}
+        onDeleteReminder={deleteReminder}
       />
 
       <ReminderModal
@@ -51,7 +52,6 @@ export default function Home() {
         newReminder={newReminder}
         setNewReminder={setNewReminder}
         position={modalPosition}
-        onDeleteReminder={deleteReminder}
       />
     </div>
   );

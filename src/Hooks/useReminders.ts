@@ -9,6 +9,8 @@ interface Reminder {
 
 export const useReminders = () => {
   const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [editReminder, setEditReminder] = useState("");
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [newReminder, setNewReminder] = useState("");
 
   const addReminder = (date: number) => {
@@ -27,12 +29,21 @@ export const useReminders = () => {
     setReminders(reminders.filter((reminder) => reminder.id !== id));
   };
 
-  const updateReminder = (id: number, title: string) => {
-    setReminders(
-      reminders.map((reminder) =>
-        reminder.id === id ? { ...reminder, title } : reminder
-      )
-    );
+  const handleEditReminder = (id: number, title: string) => {
+    setEditReminder(title);
+    setEditingId(id);
+  };
+
+  const saveReminder = () => {
+    if (editReminder !== null) {
+      setReminders(
+        reminders.map((reminder) =>
+          reminder.id === editingId
+            ? { ...reminder, title: editReminder }
+            : reminder
+        )
+      );
+    }
   };
 
   return {
@@ -41,6 +52,7 @@ export const useReminders = () => {
     setNewReminder,
     addReminder,
     deleteReminder,
-    updateReminder,
+    saveReminder,
+    handleEditReminder,
   };
 };

@@ -14,12 +14,14 @@ interface ReminderListProps {
       | React.KeyboardEvent<HTMLButtonElement>,
     reminder: Reminder
   ) => void;
+  onDeleteReminder: (id: number) => void;
 }
 
 const ReminderList: React.FC<ReminderListProps> = ({
   reminders,
   day,
   onReminderClick,
+  onDeleteReminder,
 }) => {
   return (
     <div className="w-full flex flex-col items-start">
@@ -34,6 +36,7 @@ const ReminderList: React.FC<ReminderListProps> = ({
             onClick={(e) => onReminderClick(e, reminder)}
             onKeyDown={(e) => {
               if (e.key === "Enter") onReminderClick(e, reminder);
+              if (e.key === "Backspace") onDeleteReminder(reminder.id);
             }}
             className={`w-full text-white text-xs px-2 py-1 rounded-lg truncate 
               ${

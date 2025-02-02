@@ -11,12 +11,14 @@ interface CalendarProps {
       | React.KeyboardEvent<HTMLButtonElement>,
     reminder: Reminder
   ) => void;
+  onDeleteReminder: (id: number) => void;
 }
 
 const Calendar: React.FC<CalendarProps> = ({
   reminders,
   onDayClick,
   onReminderClick,
+  onDeleteReminder,
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState<Date[]>([]);
@@ -83,18 +85,19 @@ const Calendar: React.FC<CalendarProps> = ({
         {calendarDays.map((day) => (
           <div key={day.toISOString()}>
             <li
-              className={`w-full h-32 border border-gray-300 rounded-lg p-8 flex flex-col items-center justify-between text-lg transition duration-200 shadow-sm cursor-pointer hover:bg-gray-100 ${
+              className={`w-full h-32 border border-gray-300 rounded-lg p-1 flex flex-col items-center justify-between text-lg transition duration-200 shadow-sm cursor-pointer hover:bg-gray-100 ${
                 day.toDateString() === new Date().toDateString()
                   ? "bg-purple-300 text-white font-bold"
                   : "bg-white"
               }`}
-              onDoubleClick={(e) => onDayClick(e, day)}
+              onClick={(e) => onDayClick(e, day)}
             >
               {day.getDate()}
               <ReminderList
                 reminders={reminders}
                 day={day}
                 onReminderClick={onReminderClick}
+                onDeleteReminder={onDeleteReminder}
               />
             </li>
           </div>
