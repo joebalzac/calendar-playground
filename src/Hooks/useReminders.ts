@@ -24,25 +24,27 @@ export const useReminders = () => {
     setReminders([...reminders, newReminderItem]);
     setNewReminder("");
   };
-// adds comment
   const deleteReminder = (id: number) => {
     setReminders(reminders.filter((reminder) => reminder.id !== id));
   };
 
   const handleEditReminder = (id: number, title: string) => {
-    setEditReminder(title);
     setEditingId(id);
+    setEditReminder(title);
   };
 
   const saveReminder = () => {
     if (editReminder !== null) {
-      setReminders(
-        reminders.map((reminder) =>
+      setReminders((prevReminders) =>
+        prevReminders.map((reminder) =>
           reminder.id === editingId
             ? { ...reminder, title: editReminder }
             : reminder
         )
       );
+      setEditReminder("");
+      setEditingId(null);
+
     }
   };
 
