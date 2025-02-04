@@ -26,9 +26,16 @@ const EditReminderModal = ({
 }: EditReminderProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleEditReminder = () => {
+  useEffect(() => {
     if (selectedReminder) {
-      setEditReminder(selectedReminder?.title);
+      setEditReminder("");
+    }
+  }, [selectedReminder]);
+
+  const handleEditReminderModal = () => {
+    if (selectedReminder) {
+      setEditReminder(selectedReminder.title);
+      onEditReminder(selectedReminder.id, selectedReminder.title);
       inputRef.current?.focus();
       inputRef.current?.select();
     }
@@ -50,7 +57,12 @@ const EditReminderModal = ({
           <div className="flex gap-2 mt-2">
             <button
               className="bg-green-500 text-white px-4 py-2 rounded"
-              onClick={onSaveReminder}
+              onClick={() => {
+                if (selectedReminder) {
+                  onSaveReminder();
+                  onClose();
+                }
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   onSaveReminder();
@@ -61,7 +73,7 @@ const EditReminderModal = ({
             </button>
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded"
-              onClick={handleEditReminder}
+              onClick={handleEditReminderModal}
             >
               Edit
             </button>

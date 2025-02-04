@@ -34,7 +34,7 @@ export const useReminders = () => {
   };
 
   const saveReminder = () => {
-    if (editReminder !== null) {
+    if (editReminder !== "" && editingId !== null) {
       setReminders((prevReminders) =>
         prevReminders.map((reminder) =>
           reminder.id === editingId
@@ -42,9 +42,8 @@ export const useReminders = () => {
             : reminder
         )
       );
-      setEditReminder("");
       setEditingId(null);
-
+      setEditReminder("");
     }
   };
 

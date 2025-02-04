@@ -59,7 +59,9 @@ export default function Home() {
 
   const handleSaveReminder = () => {
     saveReminder();
+    setEditReminder(editReminder);
     setIsEditModalOpen(false);
+    console.log("this is saving", editReminder);
   };
 
   console.log("Edit Reminder", editReminder);
